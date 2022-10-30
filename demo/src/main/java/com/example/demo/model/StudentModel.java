@@ -1,8 +1,9 @@
 package com.example.demo.model;
 
-import java.util.List;
+import lombok.Data;
 
+@Data
 public class StudentModel {
-    List<StudentModel> box;
-
+    private Long id;
+    private String name;
 }
