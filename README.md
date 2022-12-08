@@ -1,5 +1,8 @@
 # java_test
- saada dgdrg
+
+修改注册表HKEY_CLASSES_ROOT\Applications\javaw.exe\shell\open\command，添加参数 -jar
+
+实现双击jar包运行程序
  
  
  # xdebug install 
