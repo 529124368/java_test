@@ -5,6 +5,12 @@
 实现双击jar包运行程序
  
  
+ #vscode开发java的springboot 配置加载不同的配置文件
+ 
+ ①新建launch.json 
+ 
+ ②然后加入 "args": "--spring.profiles.active=dev"
+ 
  # xdebug install 
  - [1. xdebug2](#1-xdebug2x)
  - [2. xdebug3](#1-xdebug3x)
