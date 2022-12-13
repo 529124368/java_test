@@ -22,6 +22,9 @@ bootJar {
 	}
 }
 
+bootRun {
+	jvmArgs '-Dspring.profiles.active=dev'
+}
 
 
 dependencies {
