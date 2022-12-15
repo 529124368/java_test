@@ -1,7 +1,0 @@
-[2022-12-13 21:30:12.957] [http-nio-8080-exec-1] [ERROR] com.example.demo.controller.StudentController - api be called
-[2022-12-13 21:53:06.143] [http-nio-8080-exec-1] [ERROR] com.example.demo.controller.StudentController - api be called
-[2022-12-13 21:57:00.815] [http-nio-8080-exec-1] [ERROR] com.example.demo.controller.StudentController - api be called
-[2022-12-13 22:37:18.142] [http-nio-8080-exec-1] [ERROR] com.example.demo.controller.StudentController - api be called
-[2022-12-13 22:52:43.975] [http-nio-8080-exec-5] [ERROR] com.example.demo.controller.StudentController - api be called
-[2022-12-13 22:53:00.497] [http-nio-8080-exec-2] [ERROR] com.example.demo.controller.StudentController - api be called
-[2022-12-13 22:55:20.293] [http-nio-8080-exec-5] [ERROR] com.example.demo.controller.StudentController - api be called

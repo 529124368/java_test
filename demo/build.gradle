@@ -22,7 +22,7 @@ bootJar {
 	}
 }
 
-bootRun {
+run {
 	jvmArgs '-Dspring.profiles.active=dev'
 }
 
@@ -33,6 +33,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok:1.18.24'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	
