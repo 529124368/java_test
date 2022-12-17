@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.Getter;
@@ -31,15 +33,29 @@ public class SocketServer {
     @Value("${netty.bossThread:1}")
     private int bossThread;
 
+    private EventLoopGroup bossGroup;
+    private EventLoopGroup workerGroup;
+
     /**
      * 启动netty服务器
+     * 
+     * @throws InterruptedException
      */
     public void start() {
         this.init();
-        this.serverBootstrap.bind(this.port);
-        System.out.println("netty 启动成功" + "Netty started on port: {" + this.port + "} (TCP) with boss thread {}"
-                + this.bossThread);
-        log.info("Netty started on port: {} (TCP) with boss thread {}", this.port, this.bossThread);
+        try {
+            ChannelFuture cf = this.serverBootstrap.bind(this.port).sync();
+            System.out.println("netty 启动成功" + "Netty started on port: {" + this.port + "} (TCP) with boss thread {}"
+                    + this.bossThread);
+            log.info("Netty started on port: {} (TCP) with boss thread {}", this.port, this.bossThread);
+            cf.channel().closeFuture().sync();
+        } catch (InterruptedException e) {
+            log.error(e.getMessage());
+        } finally {
+            bossGroup.shutdownGracefully();
+            workerGroup.shutdownGracefully();
+        }
+
     }
 
     /**
@@ -47,9 +63,9 @@ public class SocketServer {
      */
     private void init() {
         // 创建两个线程组，bossGroup为接收请求的线程组，一般1-2个就行
-        NioEventLoopGroup bossGroup = new NioEventLoopGroup(this.bossThread);
+        bossGroup = new NioEventLoopGroup(this.bossThread);
         // 实际工作的线程组
-        NioEventLoopGroup workerGroup = new NioEventLoopGroup();
+        workerGroup = new NioEventLoopGroup();
         this.serverBootstrap = new ServerBootstrap();
         this.serverBootstrap.group(bossGroup, workerGroup) // 两个线程组加入进来
                 .channel(NioServerSocketChannel.class) // 配置为nio类型
