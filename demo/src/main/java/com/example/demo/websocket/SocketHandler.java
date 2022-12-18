@@ -17,10 +17,6 @@ public class SocketHandler extends ChannelInboundHandlerAdapter {
 
     /**
      * 读取到客户端发来的消息
-     *
-     * @param ctx ChannelHandlerContext
-     * @param msg msg
-     * @throws Exception e
      */
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
@@ -49,7 +45,8 @@ public class SocketHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        cause.printStackTrace();
+        // cause.printStackTrace();
+        System.out.println("客户端" + ctx.channel().id() + "有链接丢失");
         ctx.channel().close();
         clients.remove(ctx.channel());
     }

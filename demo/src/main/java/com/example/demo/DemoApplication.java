@@ -1,7 +1,5 @@
 package com.example.demo;
 
-import java.io.FileOutputStream;
-
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
