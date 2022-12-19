@@ -1,5 +1,9 @@
 package com.example.demo.websocket;
 
+import java.text.SimpleDateFormat;
+
+import org.apache.ibatis.javassist.Loader.Simple;
+
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
@@ -7,6 +11,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
+import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.CharsetUtil;
 import io.netty.util.concurrent.GlobalEventExecutor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,12 +39,16 @@ public class SocketHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+        SimpleDateFormat nowTime = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
         log.info("新的客户端链接：" + ctx.channel().id().asShortText(), CharsetUtil.UTF_8);
+        clients.writeAndFlush(
+                Unpooled.copiedBuffer(nowTime + "用户:" + ctx.channel().remoteAddress() + "上线了", CharsetUtil.UTF_8));
         clients.add(ctx.channel());
     }
 
     @Override
     public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+        clients.writeAndFlush(Unpooled.copiedBuffer("用户:" + ctx.channel().remoteAddress() + "下线了", CharsetUtil.UTF_8));
         clients.remove(ctx.channel());
     }
 
@@ -54,5 +63,22 @@ public class SocketHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
         ctx.writeAndFlush(Unpooled.copiedBuffer("我收到你的消息了", CharsetUtil.UTF_8));
+    }
+
+    @Override
+    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+        if (evt instanceof IdleStateEvent) {
+            IdleStateEvent status = (IdleStateEvent) evt;
+            switch (status.state()) {
+                case READER_IDLE:
+                    System.out.println("has read idle");
+                case WRITER_IDLE:
+                    System.out.println("has write idle");
+                case ALL_IDLE:
+                    System.out.println("has all idle");
+                default:
+                    break;
+            }
+        }
     }
 }

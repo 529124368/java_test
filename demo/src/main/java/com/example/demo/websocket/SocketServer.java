@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -71,6 +72,8 @@ public class SocketServer {
         this.serverBootstrap = new ServerBootstrap();
         this.serverBootstrap.group(bossGroup, workerGroup) // 两个线程组加入进来
                 .channel(NioServerSocketChannel.class) // 配置为nio类型
+                .option(ChannelOption.SO_BACKLOG, 128)
+                .childOption(ChannelOption.SO_KEEPALIVE, true)
                 .childHandler(this.socketInitializer); // 加入自己的初始化器
     }
 }

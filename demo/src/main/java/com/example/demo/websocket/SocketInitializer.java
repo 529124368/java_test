@@ -1,10 +1,13 @@
 package com.example.demo.websocket;
 
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.stereotype.Component;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
+import io.netty.handler.timeout.IdleStateHandler;
 
 /**
  * Socket 初始化器，每一个Channel进来都会调用这里的 InitChannel 方法
@@ -20,6 +23,7 @@ public class SocketInitializer extends ChannelInitializer<SocketChannel> {
         // pipeline.addLast(new ByteArrayDecoder());
         // pipeline.addLast(new ByteArrayEncoder());
         // 添加上自己的处理器
+        pipeline.addLast(new IdleStateHandler(10, 2, 4, TimeUnit.SECONDS));
         pipeline.addLast(new SocketHandler());
     }
 }
