@@ -22,8 +22,9 @@ public class SocketInitializer extends ChannelInitializer<SocketChannel> {
         // 添加对byte数组的编解码，netty提供了很多编解码器，你们可以根据需要选择
         // pipeline.addLast(new ByteArrayDecoder());
         // pipeline.addLast(new ByteArrayEncoder());
-        // 添加上自己的处理器
+        //添加心跳检测
         pipeline.addLast(new IdleStateHandler(10, 2, 4, TimeUnit.SECONDS));
+        // 添加上自己的处理器
         pipeline.addLast(new SocketHandler());
     }
 }
