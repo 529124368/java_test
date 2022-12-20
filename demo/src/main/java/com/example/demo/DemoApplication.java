@@ -10,9 +10,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 @MapperScan("com.example.demo.repository")
 public class DemoApplication extends SpringBootServletInitializer
 		implements CommandLineRunner {
-
 	public static void main(String[] args) {
-
 		SpringApplication.run(DemoApplication.class, args);
 	}
 

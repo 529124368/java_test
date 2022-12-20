@@ -67,18 +67,18 @@ public class SocketHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
-        if (evt instanceof IdleStateEvent) {
-            IdleStateEvent status = (IdleStateEvent) evt;
-            switch (status.state()) {
-                case READER_IDLE:
-                    System.out.println("has read idle");
-                case WRITER_IDLE:
-                    System.out.println("has write idle");
-                case ALL_IDLE:
-                    System.out.println("has all idle");
-                default:
-                    break;
-            }
-        }
+//        if (evt instanceof IdleStateEvent) {
+//            IdleStateEvent status = (IdleStateEvent) evt;
+//            switch (status.state()) {
+//                case READER_IDLE:
+//                    System.out.println("has read idle");
+//                case WRITER_IDLE:
+//                    System.out.println("has write idle");
+//                case ALL_IDLE:
+//                    System.out.println("has all idle");
+//                default:
+//                    break;
+//            }
+//        }
     }
 }
